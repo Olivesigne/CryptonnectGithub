@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cryptonnect - Page Vierge</title>
+  <style>
+    /* Styles généraux */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #1a1a1a;
+      color: #e0e0e0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    /* Bouton Retour à l'accueil */
+    .btn-retour {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      padding: 10px 20px;
+      background-color: #ff1e1e;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      text-align: center;
+      text-decoration: none;
+    }
+
+    /* Conteneur principal centré */
+    .main-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background-color: #2a2a2a;
+      border: 2px solid #ff1e1e;
+      border-radius: 10px;
+      width: 80%;
+      max-width: 600px;
+      padding: 40px;
+      box-shadow: 0px 0px 15px 5px rgba(255, 30, 30, 0.6);
+      animation: fadeIn 1s ease;
+    }
+
+    /* Animation pour le conteneur principal */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Bouton Retour à l'accueil -->
+  <a href="home.html" class="btn-retour">Retour à l'accueil</a>
+
+  <!-- Conteneur principal -->
+  <div class="main-container">
+    <h2>Bienvenue dans Cryptonnect</h2>
+    <p>Cette page est encore vide, mais vous pouvez y ajouter du contenu spécifique à votre application.</p>
+  </div>
+
+  <script>
+    // Exemple de script pour interactions futures
+    document.addEventListener("DOMContentLoaded", () => {
+      console.log("Page chargée et prête pour des interactions.");
+    });
+  </script>
+  
+</body>
+</html>

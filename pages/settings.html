@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paramètre Cryptonnect</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1a1a1a;
+            color: #e0e0e0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden; /* Empêche le défilement lorsque le cadre est animé */
+            position: relative; /* Positionnement relatif pour le bouton de retour */
+        }
+        /* Animation d'apparition pour le cadre */
+        #app-border {
+            border: 2px solid red;
+            padding: 30px; /* Augmentation de l'espacement intérieur */
+            border-radius: 8px;
+            background-color: #2a2a2a;
+            text-align: left; /* Alignement à gauche */
+            box-shadow: 0px 0px 10px 3px rgba(255, 0, 0, 0.6);
+            width: 80%;
+            max-width: 800px; /* Augmentation de la largeur du cadre */
+            position: relative;
+            transform: scale(1);
+            opacity: 0;
+            animation: appear 0.6s ease forwards; /* Animation d'apparition */
+        }
+        /* Keyframes pour l'animation d'apparition */
+        @keyframes appear {
+            0% {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+            50% {
+                transform: scale(1.05);
+                opacity: 0.5;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+        /* Bouton Accéder à la gestion de compte */
+        #account-button {
+            background-color: #ff1e1e;
+            color: #fff;
+            border: none;
+            padding: 8px 12px; /* Taille du bouton */
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background-color 0.3s, transform 0.3s; /* Transition pour les boutons */
+            margin-top: 20px; /* Espacement entre le cadre et le bouton */
+        }
+        #account-button:hover {
+            background-color: #ff6666;
+            transform: scale(1.1); /* Élargissement au survol */
+        }
+        /* Style pour le bouton Retour à l'accueil */
+        #home-button {
+            position: absolute; /* Positionnement absolu */
+            top: 20px; /* Distance par rapport au haut de la page */
+            left: 20px; /* Distance par rapport à la gauche de la page */
+            background-color: #ff1e1e;
+            color: #fff;
+            border: none;
+            padding: 10px 15px; /* Taille du bouton */
+            font-size: 14px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background-color 0.3s, transform 0.3s; /* Transition pour les boutons */
+        }
+        #home-button:hover {
+            background-color: #ff6666;
+            transform: scale(1.1); /* Élargissement au survol */
+        }
+        /* Style pour le bouton Enregistrer les paramètres */
+        #save-button {
+            background-color: #ff1e1e;
+            color: #fff;
+            border: none;
+            padding: 10px 20px; /* Taille du bouton */
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background-color 0.3s, transform 0.3s; /* Transition pour les boutons */
+            margin-top: 20px; /* Espacement entre le bouton et le cadre */
+        }
+        #save-button:hover {
+            background-color: #ff6666;
+            transform: scale(1.1); /* Élargissement au survol */
+        }
+        /* Style pour le menu déroulant */
+        #theme-selector {
+            background-color: #ff1e1e;
+            color: #fff;
+            border: none;
+            padding: 5px;
+            font-size: 14px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background-color 0.3s; /* Transition pour le sélecteur */
+            margin-top: 10px; /* Espacement au-dessus du menu déroulant */
+        }
+        #theme-selector:hover {
+            background-color: #ff6666; /* Changement de couleur au survol */
+        }
+        /* Style pour le champ de saisie du code PIN */
+        #pin-input {
+            margin-top: 15px; /* Espacement au-dessus du champ de saisie */
+            padding: 5px; /* Réduction de l'espacement intérieur */
+            border: none;
+            border-radius: 4px;
+            font-size: 14px; /* Taille de police réduite */
+            width: 60%; /* Réduction de la largeur */
+            text-align: left; /* Alignement à gauche */
+        }
+        /* Style pour les boutons du code PIN */
+        .pin-button {
+            background-color: #ff1e1e;
+            color: #fff;
+            border: none;
+            padding: 5px 8px; /* Taille du bouton réduite */
+            font-size: 12px; /* Taille de police réduite */
+            cursor: pointer;
+            border-radius: 4px;
+            margin-left: 5px; /* Espacement entre le champ de saisie et les boutons */
+            transition: background-color 0.3s, transform 0.3s; /* Transition pour les boutons */
+        }
+        .pin-button:hover {
+            background-color: #ff6666;
+            transform: scale(1.1); /* Élargissement au survol */
+        }
+        /* Style pour le conteneur des boutons de code PIN */
+        #pin-buttons-container {
+            display: flex; /* Aligne les boutons côte à côte */
+            align-items: center; /* Aligne verticalement au centre */
+            margin-top: 10px; /* Espacement au-dessus du conteneur */
+        }
+    </style>
+</head>
+<body>
+    <button id="home-button">Retour à l'accueil</button> <!-- Bouton de retour en haut à gauche -->
+    <div id="app-border">
+        <h2>Paramètre Cryptonnect</h2>
+        <br> <!-- Ligne vide entre le titre et les options -->
+        <label for="theme-selector">Choisir le thème de couleur :</label>
+        <select id="theme-selector">
+            <option value="rouge">Rouge</option>
+            <option value="vert">Vert</option>
+            <option value="bleu">Bleu</option>
+            <option value="violet">Bleu</option>
+        </select>
+
+        <br> <!-- Espace ajouté entre le menu et le champ de saisie du code PIN -->
+
+        <label for="pin-input">Entrez votre code PIN (4 à 6 chiffres) :</label>
+        <div id="pin-buttons-container">
+            <input type="text" id="pin-input" maxlength="6" placeholder="Code PIN" />
+            <button class="pin-button" id="pin-button">Valider</button> <!-- Bouton de validation -->
+            <button class="pin-button" id="reset-button">Reset</button> <!-- Bouton de reset -->
+            <button class="pin-button" id="change-button">Changer</button> <!-- Bouton de changement -->
+        </div>
+        <button id="save-button">Enregistrer les paramètres</button> <!-- Bouton en bas au milieu du cadre -->
+    </div>
+    <button id="account-button">Accéder à la gestion de compte</button> <!-- Bouton en dehors du cadre -->
+    <script>
+        // Éventuellement, vous pouvez ajouter des fonctionnalités JavaScript ici
+        document.getElementById('account-button').addEventListener('click', function() {
+            alert('Accéder à la gestion de compte');
+        });
+        // Écouteur d'événements pour le changement de thème
+        document.getElementById('theme-selector').addEventListener('change', function() {
+            const selectedTheme = this.value;
+            alert('Thème sélectionné : ' + selectedTheme);
+            // Logique pour appliquer le thème sélectionné ici
+        });
+        // Validation du code PIN
+        document.getElementById('pin-button').addEventListener('click', function() {
+            const pin = document.getElementById('pin-input').value;
+            if (pin.length < 4 || pin.length > 6 || isNaN(pin)) {
+                alert('Veuillez entrer un code PIN valide de 4 à 6 chiffres.');
+            } else {
+                alert('Code PIN validé ! Bienvenue dans Cryptonnect.');
+                // Logique pour continuer l'application ici
+            }
+        });
+        // Fonctionnalité pour le bouton Reset le code PIN
+        document.getElementById('reset-button').addEventListener('click', function() {
+            const pin = document.getElementById('pin-input').value;
+            if (pin.length < 4 || pin.length > 6 || isNaN(pin)) {
+                alert('Veuillez entrer un code PIN valide pour le reset.');
+            } else {
+                alert('Code PIN réinitialisé !');
+                document.getElementById('pin-input').value = ''; // Efface le champ de saisie
+            }
+        });
+        // Fonctionnalité pour le bouton Changer le code PIN
+        document.getElementById('change-button').addEventListener('click', function() {
+            alert('Fonctionnalité de changement de code PIN à développer.');
+            // Logique pour changer le code PIN ici
+        });
+        // Fonctionnalité pour enregistrer les paramètres
+        document.getElementById('save-button').addEventListener('click', function() {
+            alert('Paramètres enregistrés !');
+            // Logique pour enregistrer les paramètres ici
+        });
+        // Fonctionnalité pour le bouton Retour à l'accueil
+        document.getElementById('home-button').addEventListener('click', function() {
+            alert('Retour à l\'accueil...');
+            // Logique pour retourner à l'accueil ici
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop</title>
+    <style>
+        /* Styles généraux */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1a1a1a;
+            color: #e0e0e0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            animation: fadeIn 0.5s; /* Animation de fondu au chargement */
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Bouton retour à l'accueil */
+        .btn-retour {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            padding: 10px 15px;
+            font-size: 16px;
+            color: white;
+            background-color: #ff1e1e;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        /* Conteneur pour les cadres */
+        .container {
+            display: flex;
+            gap: 30px; /* Espace entre les cadres */
+            justify-content: center;
+            align-items: center;
+            width: 80%;
+            max-width: 1200px;
+            animation: slideIn 0.5s; /* Animation de glissement */
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        /* Style des cadres */
+        .cadre {
+            width: 240px;
+            height: 240px;
+            border-radius: 8px;
+            background-color: #2a2a2a;
+            display: flex;
+            flex-direction: column; /* Aligne les éléments verticalement */
+            justify-content: space-between; /* Espace entre les éléments */
+            padding: 10px; /* Ajout d'un peu d'espace intérieur */
+            color: #ff1e1e;
+            font-size: 20px;
+            box-shadow: 0px 0px 10px 2px rgba(255, 0, 0, 0.6);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative; /* Positionnement pour l'animation */
+            overflow: hidden; /* Pour cacher les éléments en dehors du cadre */
+            cursor: pointer; /* Pointeur pour indiquer que c'est cliquable */
+        }
+
+        /* Effet d'agrandissement au survol */
+        .cadre:hover {
+            transform: scale(1.15); /* Agrandissement légèrement plus fort */
+            box-shadow: 0px 0px 15px 5px rgba(255, 0, 0, 0.8);
+        }
+
+        /* Styles pour le titre, la description et le prix */
+        .product-title {
+            text-align: center; /* Centrer le titre */
+            font-weight: bold; /* Texte en gras */
+            color: white; /* Couleur blanche */
+            text-shadow: 0px 0px 10px rgba(255, 255, 255, 0.7); /* Effet de lueur */
+        }
+        .product-description {
+            color: #ff1e1e; /* Rouge brillant */
+            text-align: center; /* Centrer la description */
+            margin: 10px 0; /* Marge verticale */
+            animation: glowing 1.5s infinite alternate; /* Animation de brillance */
+        }
+        @keyframes glowing {
+            from { text-shadow: 0 0 5px #ff1e1e, 0 0 10px #ff1e1e; }
+            to { text-shadow: 0 0 20px #ff1e1e, 0 0 30px #ff1e1e; }
+        }
+        .product-price {
+            margin-left: auto; /* Aligne le prix à droite */
+            color: #e0e0e0; /* Couleur du prix */
+            font-style: italic; /* Italique pour le prix */
+            font-size: 14px; /* Taille de police réduite */
+            text-align: right; /* Alignement à droite */
+        }
+
+        /* Zone de code promo */
+        .promo-container {
+            margin-top: 50px; /* Espace supérieur pour éloigner des cadres */
+            text-align: center;
+        }
+        .promo-input {
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            width: 300px;
+            margin-top: 10px;
+            transition: border 0.3s; /* Transition pour la bordure */
+        }
+        .promo-message {
+            margin-top: 10px; /* Marge supérieure pour le message */
+            font-weight: bold; /* Texte en gras */
+            text-align: center; /* Centrer le message */
+            display: none; /* Masqué par défaut */
+        }
+        /* Styles pour code promo valide */
+        .valid {
+            border: 2px solid green; /* Bordure verte */
+            color: green; /* Couleur du texte verte */
+        }
+        /* Styles pour code promo invalide */
+        .invalid {
+            border: 2px solid red; /* Bordure rouge */
+            color: red; /* Couleur du texte rouge */
+        }
+
+        /* Modal pour les détails du produit */
+        .modal {
+            display: none; /* Masqué par défaut */
+            position: fixed; /* Reste en place */
+            z-index: 1; /* Au-dessus des autres éléments */
+            left: 0;
+            top: 0;
+            width: 100%; /* Prend toute la largeur */
+            height: 100%; /* Prend toute la hauteur */
+            overflow: auto; /* Active le défilement si nécessaire */
+            background-color: rgba(0, 0, 0, 0.8); /* Fond semi-transparent */
+            justify-content: center; /* Centre le contenu horizontalement */
+            align-items: center; /* Centre le contenu verticalement */
+        }
+        .modal-content {
+            background-color: #2a2a2a;
+            margin: 15% auto; /* Marge verticale */
+            padding: 20px;
+            border: 1px solid #ff1e1e;
+            border-radius: 8px;
+            width: 80%; /* Largeur de la modale */
+            max-width: 600px; /* Largeur maximale */
+            position: relative; /* Position relative pour le bouton de fermeture */
+        }
+        .close {
+            color: #ff1e1e;
+            float: right; /* Aligné à droite */
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer; /* Curseur en main */
+        }
+    </style>
+</head>
+<body>
+    <a href="home.html" class="btn-retour">Retour à l'accueil</a>
+
+    <div class="container">
+        <div class="cadre" onclick="openModal('Produit 1', 'Description détaillée du produit 1 ici.')">
+            <div class="product-title">Produit 1</div>
+            <div class="product-description">Description du produit 1</div>
+            <div class="product-price">Prix : 10€</div>
+        </div>
+        <div class="cadre" onclick="openModal('Produit 2', 'Description détaillée du produit 2 ici.')">
+            <div class="product-title">Produit 2</div>
+            <div class="product-description">Description du produit 2</div>
+            <div class="product-price">Prix : 20€</div>
+        </div>
+        <div class="cadre" onclick="openModal('Produit 3', 'Description détaillée du produit 3 ici.')">
+            <div class="product-title">Produit 3</div>
+            <div class="product-description">Description du produit 3</div>
+            <div class="product-price">Prix : 30€</div>
+        </div>
+        <div class="cadre" onclick="openModal('Produit 4', 'Description détaillée du produit 4 ici.')">
+            <div class="product-title">Produit 4</div>
+            <div class="product-description">Description du produit 4</div>
+            <div class="product-price">Prix : 40€</div>
+        </div>
+    </div>
+
+    <div class="promo-container">
+        <input type="text" id="promoCode" class="promo-input" placeholder="Entrez votre code promo">
+        <div id="promoMessage" class="promo-message"></div>
+    </div>
+
+    <!-- Modale -->
+    <div id="productModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2 id="modalTitle">Titre du produit</h2>
+            <p id="modalDescription">Description du produit ici.</p>
+        </div>
+    </div>
+
+    <script>
+        // Ouverture de la modale
+        function openModal(title, description) {
+            document.getElementById('modalTitle').innerText = title;
+            document.getElementById('modalDescription').innerText = description;
+            document.getElementById('productModal').style.display = 'flex'; // Changement de display pour flex
+        }
+
+        // Fermeture de la modale
+        function closeModal() {
+            document.getElementById('productModal').style.display = 'none';
+        }
+
+        // Validation du code promo
+        document.getElementById('promoCode').addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                const code = this.value.toUpperCase(); // Mettre le code promo en majuscules
+                fetch('promo.json')
+                    .then(response => response.json())
+                    .then(promos => {
+                        const promoMessage = document.getElementById('promoMessage');
+                        if (promos[code]) {
+                            promoMessage.innerText = `Votre code promo est valide ! Réduction de ${promos[code]}%`;
+                            promoMessage.className = 'promo-message valid'; // Ajoute la classe valide
+                            promoMessage.style.display = 'block'; // Afficher le message
+                        } else {
+                            promoMessage.innerText = `Votre code promo est invalide.`;
+                            promoMessage.className = 'promo-message invalid'; // Ajoute la classe invalide
+                            promoMessage.style.display = 'block'; // Afficher le message
+                        }
+                    })
+                    .catch(error => console.error('Erreur lors de la récupération des promos:', error));
+            }
+        });
+
+        // Fermer la modale en cliquant en dehors de celle-ci
+        window.onclick = function(event) {
+            if (event.target == document.getElementById('productModal')) {
+                closeModal();
+            }
+        }
+    </script>
+</body>
+</html>

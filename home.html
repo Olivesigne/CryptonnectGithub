@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Accueil - Réseau Social Chiffré</title>
+  <link rel="stylesheet" href="assets/css/home.css">
+  <style>
+    /* Ajout de styles pour le loader */
+    .custom-loader {
+      width: 50px;
+      height: 50px;
+      display: grid;
+      margin: auto; /* Centrer le loader */
+    }
+    .custom-loader::before,
+    .custom-loader::after {    
+      content:"";
+      grid-area: 1/1;
+      border: 8px solid;
+      border-radius: 50%;
+      border-color: #F41E25 #F41E25 #0000 #0000;
+      mix-blend-mode: darken;
+      animation: s4 1s infinite linear;
+    }
+    .custom-loader::after {
+      border-color: #0000 #0000 #E4E4ED #E4E4ED;
+      animation-direction: reverse;
+    }
+
+    @keyframes s4 { 
+      100% { transform: rotate(1turn); }
+    }
+    #content {
+      text-align: center; /* Centrer le texte du contenu */
+      margin-top: 20px; /* Ajouter un espace au-dessus du contenu */
+    }
+  </style>
+</head>
+<body>
+<!-- Boutons en haut -->
+<div id="top-buttons">
+    <button id="settings-btn"><a href="pages/settings.html">⚙️</a></button>
+    <button id="account-btn"><a href="pages/account.html">👤</a></button>
+    <button id="reload-btn" onclick="reloadPage()">🔄</button>
+    <button id="partners-btn"><a href="pages/partnership.html">🏆</a></button>
+</div>
+
+<!-- Menu principal -->
+<div id="main-menu">
+    <button><a href="pages/tools.html" style="color: white;">OUTILS</a></button>
+    <button><a href="pages/discussions.html" style="color: white;">DISCUSSION</a></button>
+    <button><a href="pages/forums.html" style="color: white;">FORUMS</a></button>
+    <button><a href="pages/feed.html" style="color: white;">FEED</a></button>
+    <button><a href="pages/help.html" style="color: white;">HELP</a></button>
+</div>
+
+<!-- Contenu principal : Chargement dynamique -->
+<div id="app-border">
+  <div id="content">
+    <h2>Fil d'Actualité</h2>
+    <div class="news-item" onclick="openModal('news1')">New 1 : Nouveau serveur Discord !</div>
+    <div class="news-item" onclick="openModal('news2')">New 2 : Mise à jour de sécurité.</div>
+    <div class="news-item" onclick="openModal('news3')">New 3 : Plein de fonctionnalités ajoutées.</div>
+    <div class="news-item" onclick="openModal('news4')">New 4 : La licence a été déposée !</div>
+  </div>
+</div>
+
+  <!-- Sélecteur de langue en bas de la page -->
+  <div id="language-selector">
+    <label for="language">Langue :</label>
+    <select id="language" onchange="changeLanguage()">
+      <option value="fr">Français</option>
+      <option value="en">English</option>
+      <option value="es">Español</option>
+      <option value="de">Deutsch</option>
+      <option value="it">Italiano</option>
+      <option value="pt">Português</option>
+      <option value="ru">Русский</option>
+      <option value="zh">中文</option>
+      <option value="ja">日本語</option>
+      <option value="ko">한국어</option>
+      <option value="ar">العربية</option>
+    </select>
+  </div>
+
+  <script src="assets/js/app.js"></script>
+  <script>
+    function navigateTo(page) {
+      const contentDiv = document.getElementById('content');
+      contentDiv.innerHTML = '<div class="custom-loader"></div>'; // Afficher le loader pendant le chargement
+
+      // Utiliser fetch pour charger le contenu de la page
+      fetch(page)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Erreur de chargement de la page');
+          }
+          return response.text();
+        })
+        .then(html => {
+          contentDiv.innerHTML = html; // Remplacer le contenu par celui chargé
+        })
+        .catch(error => {
+          console.error('Erreur:', error);
+          contentDiv.innerHTML = '<p>Erreur de chargement du contenu.</p>'; // Afficher un message d'erreur
+        });
+    }
+
+    function reloadPage() {
+      const contentDiv = document.getElementById('content');
+      contentDiv.innerHTML = '<div class="custom-loader"></div>'; // Afficher le loader
+      setTimeout(() => {
+        location.reload(); // Recharge la page après 2-3 secondes
+      }, 3000); // Délai de 3 secondes
+    }
+
+    function changeLanguage() {
+      // Logique pour changer la langue (à implémenter)
+      alert('Langue changée !');
+    }
+  </script>
+</body>
+</html>

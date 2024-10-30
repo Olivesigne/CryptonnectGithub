@@ -1,0 +1,213 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #1a1a1a;
+    color: #e0e0e0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+    overflow: hidden; /* Empêche le défilement lorsque le cadre est animé */
+  }
+  
+  /* Animation d'apparition pour le cadre */
+  #app-border {
+    border: 2px solid red;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: #2a2a2a;
+    text-align: center;
+    box-shadow: 0px 0px 10px 3px rgba(255, 0, 0, 0.6);
+    width: 80%;
+    max-width: 600px;
+    position: relative;
+    transform: scale(0.8);
+    opacity: 0;
+    animation: appear 0.6s ease forwards; /* Animation d'apparition */
+  }
+  
+  /* Keyframes pour l'animation d'apparition */
+  @keyframes appear {
+    0% {
+      transform: scale(0.8);
+      opacity: 0;
+    }
+    50% {
+      transform: scale(1.05);
+      opacity: 0.5;
+    }
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+  
+  /* Fil d'actualité */
+  #news-feed {
+    padding: 15px;
+    text-align: left;
+    animation: fade-in 0.6s ease forwards; /* Animation d'apparition pour le contenu */
+  }
+  
+  /* Keyframes pour l'animation du contenu */
+  @keyframes fade-in {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  
+  #news-feed h2 {
+    font-size: 20px;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+  
+  /* Effet de survol pour les éléments d'actualité */
+  .news-item {
+    padding: 8px;
+    border-bottom: 1px solid #555;
+    transition: background-color 0.3s, transform 0.3s; /* Transition pour l'effet de survol */
+  }
+  
+  .news-item:hover {
+    background-color: rgba(255, 255, 255, 0.1); /* Changement de couleur en survol */
+    transform: translateY(-2px); /* Légère élévation en survol */
+  }
+  
+  .news-item:last-child {
+    border-bottom: none;
+  }
+  
+  /* Boutons Paramètres et Reload en haut de la page */
+  #top-buttons {
+    display: flex;
+    gap: 10px;
+    position: absolute;
+    top: 15px;
+    right: 20px;
+  }
+  
+  #top-buttons button {
+    background-color: #ff1e1e;
+    color: #fff;
+    border: none;
+    padding: 5px;
+    font-size: 18px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s, transform 0.3s; /* Transition pour les boutons */
+  }
+  
+  #top-buttons button:hover {
+    background-color: #ff6666;
+    transform: scale(1.1); /* Élargissement au survol */
+  }
+  
+  /* Menu principal superposé verticalement à gauche */
+  #main-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  
+  #main-menu button {
+    background-color: #ff1e1e;
+    color: #fff;
+    border: none;
+    padding: 8px 12px;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s, transform 0.3s; /* Transition pour les boutons */
+  }
+  
+  #main-menu button:hover {
+    background-color: #ff6666;
+    transform: scale(1.1); /* Élargissement au survol */
+  }
+  
+  /* Sélecteur de langue en bas */
+  #language-selector {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+  }
+  
+  #language-selector select {
+    background-color: #ff1e1e;
+    color: #fff;
+    border: none;
+    padding: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s; /* Transition pour le sélecteur */
+  }
+  
+  #language-selector select:hover {
+    background-color: #ff6666; /* Changement de couleur au survol */
+  }
+ 
+  /* Sélecteur de langue */
+  #language-selector {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+  }
+  
+  #language-selector select {
+    background-color: #ff1e1e;
+    color: #fff;
+    border: none;
+    padding: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s, transform 0.3s; /* Transition pour effet de survol */
+    animation: fade-in 0.6s ease-out; /* Animation de fondu lors de l'apparition */
+  }
+  
+  #language-selector select:hover {
+    background-color: #ff6666;
+    transform: scale(1.1); /* Légère mise en avant sur survol */
+  }
+  
+  /* Animation de fade-in pour le sélecteur de langue */
+  @keyframes fade-in {
+    0% {
+      opacity: 0;
+      transform: translateY(10px); /* Départ en léger décalage */
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  body.loading {
+    overflow: hidden; /* Empêche le défilement pendant le rechargement */
+  }
+  
+  .loading::before {
+    content: '🔄'; /* Ajoutez une icône de rechargement */
+    font-size: 50px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    animation: spin 1s linear infinite;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page Vierge Dynamique</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1a1a1a;
+            color: #e0e0e0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        /* Conteneur des cadres */
+        .container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* 3 colonnes */
+            gap: 20px;
+            width: 80%;
+            max-width: 900px; /* Ajuster la largeur pour une meilleure présentation */
+        }
+
+        /* Style des cadres */
+        .cadre {
+            border: 2px solid red;
+            padding: 20px;
+            border-radius: 8px;
+            background-color: #2a2a2a;
+            text-align: center;
+            box-shadow: 0px 0px 10px 3px rgba(255, 0, 0, 0.6);
+            transform: translateY(100px) scale(0.9);
+            opacity: 0;
+            animation: dynamicAppear 0.8s ease forwards;
+            transition: transform 0.3s ease;
+            height: 200px; /* Hauteur fixe pour uniformité */
+        }
+
+        /* Animations dynamiques avec délai pour chaque cadre */
+        .cadre:nth-child(1) { animation-delay: 0.1s; }
+        .cadre:nth-child(2) { animation-delay: 0.2s; }
+        .cadre:nth-child(3) { animation-delay: 0.3s; }
+        .cadre:nth-child(4) { animation-delay: 0.4s; }
+        .cadre:nth-child(5) { animation-delay: 0.5s; }
+        .cadre:nth-child(6) { animation-delay: 0.6s; }
+
+        /* Keyframes pour l'animation d'apparition dynamique */
+        @keyframes dynamicAppear {
+            0% {
+                transform: translateY(50px) scale(0.8);
+                opacity: 0;
+            }
+            50% {
+                transform: translateY(-10px) scale(1.05);
+                opacity: 0.7;
+            }
+            100% {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+            }
+        }
+
+        /* Style pour le titre et sous-titre */
+        .cadre h2 {
+            font-size: 20px;
+            margin-bottom: 5px;
+        }
+
+        .cadre h3 {
+            font-size: 14px;
+            color: #ff4d4d; /* Rouge brillant */
+            text-shadow: 0px 0px 6px rgba(255, 77, 77, 0.8);
+            margin: 5px 0 15px;
+        }
+
+        /* Effet de levée au survol */
+        .cadre:hover {
+            transform: translateY(-5px);
+        }
+
+        /* Bouton Accéder à cette page */
+        .btn.acceder {
+            margin-top: 15px;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: white;
+            background-color: #ff1e1e;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .btn.acceder:hover {
+            background-color: #ff6666;
+            transform: scale(1.1);
+        }
+
+        /* Style du bouton Retour à l'Accueil */
+        .btn.retour {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: white;
+            background-color: #ff1e1e;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .btn.retour:hover {
+            background-color: #ff6666;
+        }
+    </style>
+</head>
+<body>
+    <!-- Bouton Retour à l'accueil -->
+    <button class="btn retour" onclick="retourAccueil()">Retourner à l'accueil</button>
+
+    <!-- Conteneur principal avec les cadres -->
+    <div class="container">
+        <div class="cadre">
+            <h2>Outil Externe</h2>
+            <h3>Outil à télécharger</h3>
+            <button class="btn acceder" onclick="accederPage('outil_externe.html')">Accéder à cette page</button>
+        </div>
+        
+        <div class="cadre">
+            <h2>Outil en Ligne</h2>
+            <h3>Outil intégré à l'application</h3>
+            <button class="btn acceder" onclick="accederPage('outil_en_ligne.html')">Accéder à cette page</button>
+        </div>
+        
+        <div class="cadre">
+            <h2>Ressource</h2>
+            <h3>Leaks, Database, etc.</h3>
+            <button class="btn acceder" onclick="accederPage('ressource.html')">Accéder à cette page</button>
+        </div>
+
+        <div class="cadre">
+            <h2>Meilleur site Web</h2>
+            <h3>Découvrez des sites de qualité</h3>
+            <button class="btn acceder" onclick="accederPage('meilleur_site_web.html')">Accéder à cette page</button>
+        </div>
+
+        <div class="cadre">
+            <h2>Télécharger un ebook exclusif</h2>
+            <h3>Profitez d'un contenu premium</h3>
+            <button class="btn acceder" onclick="accederPage('ebook_exclusif.html')">Accéder à cette page</button>
+        </div>
+
+        <div class="cadre">
+            <h2>Technique / Méthode</h2>
+            <h3>Accédez à nos méthodes</h3>
+            <button class="btn acceder" onclick="accederPage('technique_methode.html')">Accéder à cette page</button>
+        </div>
+    </div>
+
+    <script>
+        function retourAccueil() {
+            window.location.href = 'index.html';
+        }
+
+        function accederPage(page) {
+            window.location.href = page;
+        }
+    </script>
+</body>
+</html>

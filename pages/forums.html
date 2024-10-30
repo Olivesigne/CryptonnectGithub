@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forum</title>
+    <style>
+        /* Styles généraux */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1a1a1a;
+            color: #e0e0e0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        /* Bouton retour à l'accueil */
+        .btn-retour {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            padding: 10px 15px;
+            font-size: 16px;
+            color: white;
+            background-color: #ff1e1e;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        /* Conteneur pour le forum */
+        .forum-container {
+            width: 80%;
+            max-width: 800px;
+            margin-top: 60px;
+            border-radius: 8px;
+            background-color: #2a2a2a;
+            padding: 20px;
+            box-shadow: 0px 0px 20px rgba(255, 0, 0, 0.5);
+            overflow-y: auto; /* Permet le défilement */
+            max-height: 60vh; /* Limiter la hauteur du conteneur */
+        }
+
+        /* Style de la barre de recherche */
+        .search-bar {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+            background-color: #1c1c1c;
+            color: #e0e0e0;
+            margin-bottom: 20px;
+        }
+
+        /* Style des sujets de discussion */
+        .topic {
+            background-color: #1c1c1c;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0px 0px 10px rgba(255, 0, 0, 0.5);
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+
+        /* Effet d'agrandissement au survol des sujets */
+        .topic:hover {
+            transform: scale(1.05);
+            box-shadow: 0px 0px 15px rgba(255, 0, 0, 0.8);
+        }
+
+        /* Style du formulaire de nouveau sujet */
+        .new-topic, .new-discussion {
+            background-color: #1c1c1c;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0px 0px 10px rgba(255, 0, 0, 0.5);
+        }
+
+        /* Champs de texte */
+        .new-topic input, .new-topic textarea, .new-discussion input, .new-discussion textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+            background-color: #1c1c1c;
+            color: #e0e0e0;
+        }
+
+        /* Checkbox d'anonymat */
+        .anonym-checkbox {
+            margin: 10px 0;
+            color: #e0e0e0;
+        }
+
+        /* Bouton d'envoi */
+        .submit-button {
+            background-color: #ff1e1e;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 15px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        /* Effet de changement de couleur au survol du bouton d'envoi */
+        .submit-button:hover {
+            background-color: #ff4d4d;
+        }
+
+        /* Style des discussions sous chaque sujet */
+        .discussion {
+            background-color: #2a2a2a;
+            border-radius: 5px;
+            padding: 10px;
+            margin-top: 10px;
+            box-shadow: 0px 0px 5px rgba(255, 0, 0, 0.5);
+        }
+
+        /* Style pour le chat modale */
+        .chat-modal {
+            display: none; /* Cacher par défaut */
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            max-width: 600px;
+            background-color: #2a2a2a;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0px 0px 20px rgba(255, 0, 0, 0.5);
+            z-index: 1000;
+            overflow-y: auto; /* Permet le défilement */
+            max-height: 60vh; /* Limiter la hauteur du modal */
+        }
+
+        /* Style de l'arrière-plan du modal */
+        .modal-background {
+            display: none; /* Cacher par défaut */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 999;
+        }
+
+        /* Style pour le bouton de signalement */
+        .report-button {
+            background-color: #ffcc00;
+            color: black;
+            border: none;
+            border-radius: 5px;
+            padding: 5px 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .report-button:hover {
+            background-color: #ffe600;
+        }
+
+        /* Style des boutons de vote */
+        .vote-button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 5px 10px;
+            cursor: pointer;
+            margin-right: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .vote-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <a href="home.html" class="btn-retour">Retour à l'accueil</a>
+
+    <div class="forum-container">
+        <h1>Forum de Discussion</h1>
+
+        <input type="text" id="searchBar" class="search-bar" placeholder="Rechercher des sujets..." onkeyup="filterTopics()">
+
+        <div class="new-topic">
+            <h2>Créer un Nouveau Sujet</h2>
+            <input type="text" id="topicTitle" placeholder="Titre du sujet" required>
+            <textarea id="topicContent" rows="4" placeholder="Écrivez votre message ici..." required></textarea>
+            <label class="anonym-checkbox">
+                <input type="checkbox" id="anonymCheckbox"> Envoyer anonymement
+            </label>
+            <button class="submit-button" onclick="createTopic()">Soumettre</button>
+        </div>
+
+        <h2>Sujets de Discussion</h2>
+        <div id="topicList"></div>
+    </div>
+
+    <!-- Modal pour le chat -->
+    <div class="modal-background" id="modalBackground" onclick="closeChat()"></div>
+    <div class="chat-modal" id="chatModal">
+        <button onclick="closeChat()" style="float: right;">✖</button>
+        <div id="chatContent"></div>
+        <div class="new-discussion">
+            <input type="text" placeholder="Votre réponse ici..." id="discussionContent" required>
+            <label class="anonym-checkbox">
+                <input type="checkbox" id="discussionAnonymousCheckbox"> Envoyer anonymement
+            </label>
+            <button class="submit-button" onclick="createDiscussion()">Soumettre</button>
+        </div>
+    </div>
+
+    <script>
+        const topics = JSON.parse(localStorage.getItem('topics')) || []; // Pour stocker les sujets
+
+        // Fonction pour créer un nouveau sujet
+        function createTopic() {
+            const title = document.getElementById('topicTitle').value.trim();
+            const content = document.getElementById('topicContent').value.trim();
+            const isAnonymous = document.getElementById('anonymCheckbox').checked;
+
+            if (title && content) {
+                const topic = { title, content, isAnonymous, discussions: [] };
+                topics.push(topic);
+                saveTopics(); // Sauvegarder dans le localStorage
+                renderTopics(); // Mettre à jour l'affichage
+                clearInputFields();
+            } else {
+                alert("Veuillez remplir tous les champs.");
+            }
+        }
+
+        // Fonction pour créer une nouvelle discussion
+        function createDiscussion() {
+            const content = document.getElementById('discussionContent').value.trim();
+            const isAnonymous = document.getElementById('discussionAnonymousCheckbox').checked;
+
+            if (content) {
+                const discussion = { content, isAnonymous };
+                const topicIndex = document.getElementById('chatModal').dataset.topicIndex; // Récupérer l'index du sujet
+                topics[topicIndex].discussions.push(discussion);
+                saveTopics(); // Sauvegarder dans le localStorage
+                renderChat(topicIndex); // Mettre à jour l'affichage
+                document.getElementById('discussionContent').value = ""; // Réinitialiser le champ de réponse
+            } else {
+                alert("Veuillez écrire votre réponse.");
+            }
+        }
+
+        // Fonction pour rendre les sujets
+        function renderTopics() {
+            const topicList = document.getElementById('topicList');
+            topicList.innerHTML = ''; // Effacer la liste actuelle
+
+            topics.forEach((topic, index) => {
+                const topicDiv = document.createElement('div');
+                topicDiv.className = 'topic';
+                topicDiv.innerHTML = `<strong>${topic.isAnonymous ? 'Anonyme' : 'Utilisateur'} : ${topic.title}</strong><p>${topic.content}</p>`;
+                topicDiv.onclick = () => renderChat(index); // Ouvrir le chat en cliquant sur le sujet
+                topicList.appendChild(topicDiv);
+            });
+        }
+
+        // Fonction pour afficher les discussions d'un sujet
+        function renderChat(index) {
+            const chatModal = document.getElementById('chatModal');
+            const chatContent = document.getElementById('chatContent');
+            chatContent.innerHTML = ''; // Réinitialiser le contenu de chat
+
+            topics[index].discussions.forEach(discussion => {
+                const discussionDiv = document.createElement('div');
+                discussionDiv.className = 'discussion';
+                discussionDiv.innerHTML = `<strong>${discussion.isAnonymous ? 'Anonyme' : 'Utilisateur'} : </strong>${discussion.content}`;
+                chatContent.appendChild(discussionDiv);
+            });
+
+            chatModal.dataset.topicIndex = index; // Enregistrer l'index du sujet dans le modal
+            chatModal.style.display = 'block'; // Afficher le modal
+            document.getElementById('modalBackground').style.display = 'block'; // Afficher l'arrière-plan
+        }
+
+        // Fonction pour fermer le chat
+        function closeChat() {
+            document.getElementById('chatModal').style.display = 'none';
+            document.getElementById('modalBackground').style.display = 'none';
+        }
+
+        // Fonction pour sauvegarder les sujets dans le localStorage
+        function saveTopics() {
+            localStorage.setItem('topics', JSON.stringify(topics));
+        }
+
+        // Fonction pour filtrer les sujets
+        function filterTopics() {
+            const searchValue = document.getElementById('searchBar').value.toLowerCase();
+            const filteredTopics = topics.filter(topic => topic.title.toLowerCase().includes(searchValue));
+            const topicList = document.getElementById('topicList');
+            topicList.innerHTML = ''; // Effacer la liste actuelle
+
+            filteredTopics.forEach((topic, index) => {
+                const topicDiv = document.createElement('div');
+                topicDiv.className = 'topic';
+                topicDiv.innerHTML = `<strong>${topic.isAnonymous ? 'Anonyme' : 'Utilisateur'} : ${topic.title}</strong><p>${topic.content}</p>`;
+                topicDiv.onclick = () => renderChat(index); // Ouvrir le chat en cliquant sur le sujet
+                topicList.appendChild(topicDiv);
+            });
+        }
+
+        // Fonction pour effacer les champs de saisie
+        function clearInputFields() {
+            document.getElementById('topicTitle').value = '';
+            document.getElementById('topicContent').value = '';
+            document.getElementById('anonymCheckbox').checked = false;
+        }
+
+        // Fonction de sauvegarde automatique
+        function autoSave() {
+            saveTopics(); // Appel de la fonction de sauvegarde
+        }
+
+        // Appeler la fonction de rendu au chargement
+        renderTopics();
+        
+        // Configuration de la sauvegarde automatique toutes les 10 secondes
+        setInterval(autoSave, 10000); // 10000 ms = 10 secondes
+    </script>
+</body>
+</html>
